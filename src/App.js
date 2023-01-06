@@ -50,6 +50,9 @@ class App extends React.Component {
       }
     ]
   }
+  switchTab = (type) => {
+    console.log('switch',type);
+  };
   render () {
     return (
       <div className="App">
@@ -62,12 +65,15 @@ class App extends React.Component {
           <div className="tabs-order">
             <ul className="sort-container">
               {
-                this.state.tabs.map(tab => (
-                  <li
-                    key={tab.id}
-                    className={tab.type === this.state.active ? 'on' : ''}
-                  >按{tab.name}排序</li>
-                ))
+                this.state.tabs.map(tab => {
+                  return (
+                    <li
+                      onClick={()=>this.switchTab(tab.type)}
+                      key={tab.id}
+                      className={tab.type === this.state.active ? 'on' : ''}
+                    >按{tab.name}排序</li>
+                  );
+                })
               }
             </ul>
           </div>
