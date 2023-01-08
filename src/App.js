@@ -1,5 +1,6 @@
 import './index.css';
 import React, { createContext } from 'react';
+import * as PropTypes from "prop-types";
 
 const { Provider, Consumer } = createContext();
 
@@ -70,13 +71,33 @@ function ComponentC() {
   );
 }
 
+function ListItems({ item, delHandler }) {
+  return <>
+    <h3>{item.name}</h3>
+    <p>{item.price}</p>
+    <p>{item.info}</p>
+    <button onClick={() => delHandler(item.id)}>删除</button>
+  </>;
+}
+
+ListItems.propTypes = {
+  item: PropTypes.any,
+  onClick: PropTypes.func
+};
+
 class App extends React.Component {
   state = {
     message: 'this is message',
-    list: [ 1, 2, 3 ], userinfo: {
+    list: [ 1, 2, 3 ],
+    userinfo: {
       name: 'cp', age: 30
     },
-    sendAMsg: '測試父傳子'
+    sendAMsg: '測試父傳子',
+    listItems: [
+      { id: 1, name: '超级好吃的棒棒糖', price: 18.8, info: '开业大酬宾，全场8折' },
+      { id: 2, name: '超级好吃的大鸡腿', price: 34.2, info: '开业大酬宾，全场8折' },
+      { id: 3, name: '超级无敌的冰激凌', price: 14.2, info: '开业大酬宾，全场8折' }
+    ]
   };
 
   getMsg = () => {
@@ -92,6 +113,11 @@ class App extends React.Component {
     this.setState({ sendAMsg: msg });
   };
 
+  delHandler = (id) => {
+    console.log(id);
+    this.setState({ listItems: this.state.listItems.filter(item => item.id !== id) });
+  };
+
   render() {
 
     return (
@@ -105,6 +131,13 @@ class App extends React.Component {
           <SonB getBMsg={this.getBMsg}/>
           <hr/>
           <ComponentA/>
+          <hr/>
+          <h6>ListItem</h6>
+          <div>
+            {this.state.listItems.map(item => (
+              <ListItems key={item.id} item={item} delHandler={this.delHandler}/>
+            ))}
+          </div>
         </div>
       </Provider>
     );
