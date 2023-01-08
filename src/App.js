@@ -2,11 +2,12 @@ import './index.css';
 import React from 'react';
 
 function SonF(props) {
+  const { list, userInfo, getMsg, child } = props;
   return (<div>
-    我是函數子組件,{props.list.map(item => <p key={item}>{item}</p>)}
-    {props.userInfo.name}
-    <button onClick={props.getMsg}>trig function in parent</button>
-    {props.child}
+    我是函數子組件,{list.map(item => <p key={item}>{item}</p>)}
+    {userInfo.name}
+    <button onClick={getMsg}>trig function in parent</button>
+    {child}
   </div>);
 }
 
