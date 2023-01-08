@@ -1,5 +1,7 @@
 import './index.css';
-import React from 'react';
+import React, { createContext } from 'react';
+
+const { Provider, Consumer } = createContext();
 
 function SonF({ list, userInfo, getMsg, child, getSonMsg }) {
   // const { list, userInfo, getMsg, child } = props;
@@ -41,6 +43,33 @@ class SonC extends React.Component {
   }
 }
 
+function ComponentA() {
+  return (
+    <div>
+      this is ComA
+      <ComponentC/>
+    </div>
+  );
+}
+
+function ComponentB() {
+  return (
+    <div>this is ComB</div>
+  );
+}
+
+function ComponentC() {
+  return (
+    <div>
+      this is ComC
+      <br/>
+      <Consumer>
+        {value => <span>{value}</span>}
+      </Consumer>
+    </div>
+  );
+}
+
 class App extends React.Component {
   state = {
     message: 'this is message',
@@ -65,14 +94,20 @@ class App extends React.Component {
 
   render() {
 
-    return (<div>
-      <SonF list={this.state.list} userInfo={this.state.userinfo} getMsg={this.getMsg}
-            child={<span>this is span</span>} getSonMsg={this.getSonMsg}/>
-      <hr/>
-      <SonC msg={this.state.message}/>
-      <SonA sendAMsg={this.state.sendAMsg}/>
-      <SonB getBMsg={this.getBMsg}/>
-    </div>);
+    return (
+      <Provider value={this.state.message}>
+        <div>
+          <SonF list={this.state.list} userInfo={this.state.userinfo} getMsg={this.getMsg}
+                child={<span>this is span</span>} getSonMsg={this.getSonMsg}/>
+          <hr/>
+          <SonC msg={this.state.message}/>
+          <SonA sendAMsg={this.state.sendAMsg}/>
+          <SonB getBMsg={this.getBMsg}/>
+          <hr/>
+          <ComponentA/>
+        </div>
+      </Provider>
+    );
   }
 }
 
