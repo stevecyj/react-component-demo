@@ -1,8 +1,8 @@
 import './index.css';
 import React from 'react';
 
-function SonF(props) {
-  const { list, userInfo, getMsg, child } = props;
+function SonF({ list, userInfo, getMsg, child }) {
+  // const { list, userInfo, getMsg, child } = props;
   return (<div>
     我是函數子組件,{list.map(item => <p key={item}>{item}</p>)}
     {userInfo.name}
