@@ -71,12 +71,14 @@ function ComponentC() {
   );
 }
 
-function ListItems({ item, delHandler }) {
+function ListItems({ item, delHandler, children }) {
+  // children();
   return <>
     <h3>{item.name}</h3>
     <p>{item.price}</p>
     <p>{item.info}</p>
     <button onClick={() => delHandler(item.id)}>删除</button>
+    {children}
   </>;
 }
 
@@ -135,7 +137,13 @@ class App extends React.Component {
           <h6>ListItem</h6>
           <div>
             {this.state.listItems.map(item => (
-              <ListItems key={item.id} item={item} delHandler={this.delHandler}/>
+              <ListItems key={item.id} item={item} delHandler={this.delHandler}>
+                {/*<div>this is ListItems</div>*/}
+                {/*{() => console.log(123)}*/}
+                {<div>
+                  <p>this is p</p>
+                </div>}
+              </ListItems>
             ))}
           </div>
         </div>
