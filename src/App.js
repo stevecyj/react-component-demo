@@ -71,7 +71,7 @@ function ComponentC() {
   );
 }
 
-function Test({ list=[6,7,8] }) {
+function Test({ list = [ 6, 7, 8 ] }) {
   return (
     <div>{list.map((item, idx) => <p key={idx}>{item}</p>)}</div>
   );
@@ -80,6 +80,21 @@ function Test({ list=[6,7,8] }) {
 Test.propTypes = {
   list: PropTypes.array
 };
+
+class TestA extends React.Component {
+  static defaultProps={
+    pageSize: 10
+  }
+  render() {
+    return (
+      <div>{this.props.pageSize}</div>
+    );
+  }
+}
+
+// TestA.defaultProps = {
+//   pageSize: 10
+// };
 
 function ListItems({ item, delHandler, children }) {
   // children();
@@ -156,7 +171,8 @@ class App extends React.Component {
               </ListItems>
             ))}
           </div>
-          <Test />
+          <Test/>
+          <TestA pageSize={20}/>
         </div>
       </Provider>
     );
