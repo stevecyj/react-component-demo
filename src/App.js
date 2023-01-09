@@ -82,14 +82,28 @@ Test.propTypes = {
 };
 
 class TestA extends React.Component {
-  static defaultProps={
+  static defaultProps = {
     pageSize: 10
-  }
+  };
+
   render() {
     return (
       <div>{this.props.pageSize}</div>
     );
   }
+}
+
+class TestB extends React.Component {
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
+  }
+
+  render() {
+    return (
+      <div>this is TestB</div>
+    );
+  }
+
 }
 
 // TestA.defaultProps = {
@@ -113,6 +127,15 @@ ListItems.propTypes = {
 };
 
 class App extends React.Component {
+  constructor() {
+    super();
+    console.log('constructor');
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount');
+  }
+
   state = {
     message: 'this is message',
     list: [ 1, 2, 3 ],
@@ -124,7 +147,9 @@ class App extends React.Component {
       { id: 1, name: '超级好吃的棒棒糖', price: 18.8, info: '开业大酬宾，全场8折' },
       { id: 2, name: '超级好吃的大鸡腿', price: 34.2, info: '开业大酬宾，全场8折' },
       { id: 3, name: '超级无敌的冰激凌', price: 14.2, info: '开业大酬宾，全场8折' }
-    ]
+    ],
+    count: 0,
+    flag: true
   };
 
   getMsg = () => {
@@ -145,7 +170,17 @@ class App extends React.Component {
     this.setState({ listItems: this.state.listItems.filter(item => item.id !== id) });
   };
 
+  counterHandler = () => {
+    this.setState({ count: this.state.count + 1 });
+    this.setState({ flag: !this.state.flag });
+  };
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log('componentDidUpdate');
+  }
+
   render() {
+    console.log('render');
 
     return (
       <Provider value={this.state.message}>
@@ -173,6 +208,9 @@ class App extends React.Component {
           </div>
           <Test/>
           <TestA pageSize={20}/>
+          <hr/>
+          <button onClick={this.counterHandler}>{this.state.count}</button>
+          {this.state.flag ? <TestB/> : null}
         </div>
       </Provider>
     );
