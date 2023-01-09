@@ -71,7 +71,7 @@ function ComponentC() {
   );
 }
 
-function Test({ list }) {
+function Test({ list=[6,7,8] }) {
   return (
     <div>{list.map((item, idx) => <p key={idx}>{item}</p>)}</div>
   );
@@ -156,7 +156,7 @@ class App extends React.Component {
               </ListItems>
             ))}
           </div>
-          <Test list={[ 1, 2, 3 ]}/>
+          <Test />
         </div>
       </Provider>
     );
