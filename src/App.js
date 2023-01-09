@@ -71,6 +71,16 @@ function ComponentC() {
   );
 }
 
+function Test({ list }) {
+  return (
+    <div>{list.map((item, idx) => <p key={idx}>{item}</p>)}</div>
+  );
+}
+
+Test.propTypes = {
+  list: PropTypes.array
+};
+
 function ListItems({ item, delHandler, children }) {
   // children();
   return <>
@@ -146,6 +156,7 @@ class App extends React.Component {
               </ListItems>
             ))}
           </div>
+          <Test list={[ 1, 2, 3 ]}/>
         </div>
       </Provider>
     );
